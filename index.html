@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 Figuras</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1660" height="830" style="border: 3px solid black"></canvas>
+    <script>
+       
+        const c = document.getElementById("myCanvas");
+        const ctx = c.getContext("2d");
+        
+        // CuadAzul
+        ctx.fillStyle = "blue";
+        ctx.fillRect(25, 25, 150, 150);
+        
+        // CuadRojo
+        ctx.fillStyle = "red";
+        ctx.fillRect(125, 135, 150, 150); 
+        
+        // CuadRosa
+        ctx.fillStyle = "rgba(255, 192, 203, 0.5)"; 
+        ctx.fillRect(225, 225, 150, 150);
+    </script>
+</body>
+</html>
