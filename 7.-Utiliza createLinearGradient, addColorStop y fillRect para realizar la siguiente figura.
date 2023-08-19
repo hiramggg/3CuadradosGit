@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina de Hiram</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="1000" ></canvas>
+    <script>
+
+
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+
+ctx.beginPath();
+ctx.moveTo(0, 0);
+ctx.lineTo(300, 100);
+
+
+ctx.stroke();
+
+ctx.beginPath();
+ctx.moveTo(225, 100);
+ctx.lineTo(185, 265);
+ctx.lineTo(125, 265);
+ctx.stroke();
+ctx.fill();
+
+ctx.fillStyle = "green";
+ctx.strokeStyle = "red";
+
+ctx.beginPath();
+ctx.arc(105, 210, 25, 0, 2 * Math.PI);
+
+ctx.stroke();
+
+ctx.beginPath();
+ctx.arc(35, 210, 25, 0, 2 * Math.PI);
+ctx.fill();
+ctx.stroke();
+
+//Letras 
+ctx.fillStyle = "Blue";
+ctx.font = "35px Comic Sans MS";
+ctx.fillText("Pagina de Hiram :D", 200, 50);
+
+
+ctx.strokeStyle = "black";
+ctx.font = "35px Comic Sans MS";
+ctx.strokeText("Pagina de Hiram :D", 201, 52);
+
+ctx.strokeStyle = "gray";
+ctx.font = "35px Comic Sans MS";
+ctx.strokeText("Pagina de Hiram :D", 201, 53);
+
+//Rectangulo Gradiante
+
+const grd = ctx.createLinearGradient(90, 100, 160, 0);
+grd.addColorStop(0, "blue");
+grd.addColorStop(0.5, "black");
+grd.addColorStop(1, "red");
+
+
+ctx.fillStyle = grd;
+ctx.fillRect(240, 140, 150, 100);
+
+
+    </script>  
+</body>
+</html>
