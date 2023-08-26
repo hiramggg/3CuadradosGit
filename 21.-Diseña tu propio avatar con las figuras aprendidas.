@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar Designer</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            background-color: rgb(135, 126, 145);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="1300"></canvas>
+    <img id="strawChop" src="chopper.png" alt="One piece chopper" hidden >
+    
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function random_rgba() {
+            const o = Math.round, r = Math.random, s = 255;
+            return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+        }
+
+        function dibujarMe(x, y) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+
+            // pelo
+            ctx.fillStyle = "#000000";
+            ctx.arc(395, 210, 80, 0, 2 * Math.PI);
+            ctx.arc(640, 210, 80, 0, 2 * Math.PI);
+            ctx.arc(395, 290, 80, 0, 2 * Math.PI);
+            ctx.arc(640, 290, 80, 0, 2 * Math.PI);
+            ctx.fillRect(395, 100, 250, 250);
+            ctx.fillStyle = "#000000";
+            ctx.fill();
+
+            // Cuerpo 
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(400, 450, 250, 450);
+
+            // Cabeza 
+            ctx.beginPath();
+            ctx.arc(520 , 300, 150, 0, 2 * Math.PI);
+            ctx.fillStyle = "#FFDAB9";
+            ctx.fill();
+
+            // Ojos 
+            ctx.beginPath();
+            ctx.arc(450  , 250 , 50, 0, 2 * Math.PI);
+            ctx.arc(580, 250, 50, 0, 2 * Math.PI);
+            ctx.fillStyle = "#000000";
+            ctx.fill();
+
+             // hombros
+             ctx.beginPath();
+            ctx.arc(380  , 498 , 50, 0, 2 * Math.PI);
+            ctx.arc(668, 498, 50, 0, 2 * Math.PI);
+            ctx.fillStyle = "#000000";
+            ctx.fill();
+
+
+
+            //brazo
+             
+             ctx.beginPath();
+            ctx.rect(330  , 510 , 70, 185);
+            ctx.rect(650  , 510 , 70, 185);
+            ctx.fillStyle = "#FFDAB9";
+            ctx.fill();
+
+            // Manos
+            ctx.beginPath();
+            ctx.arc(365, 710, 38, 0, 2 * Math.PI);
+            ctx.arc(685, 710, 38, 0, 2 * Math.PI);
+            ctx.fillStyle = "#FFDAB9";
+            ctx.fill();
+
+            // Ojos (las cosas de adentro)
+            ctx.beginPath();
+            ctx.arc(450  , 250 , 25, 0, 2 * Math.PI);
+            ctx.arc(580, 250, 25, 0, 2 * Math.PI);
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fill();
+
+            // Boca 
+            ctx.fillStyle = "#A63554";
+            ctx.fillRect(x, 370 , 100, 5);
+            
+            // cuello
+            ctx.beginPath();
+            ctx.arc(525, 475, 68, 0, 2 * Math.PI);
+            ctx.fillStyle = "#FFDAB9";
+            ctx.fill();
+
+
+            // Cuello 
+            ctx.beginPath();
+            ctx.rect(460 , 420 , 130, 78);
+            ctx.fillStyle = "#FFDAB9";
+            ctx.fill();
+
+
+            // pants
+            ctx.beginPath();
+            ctx.rect(400 , 850 , 250, 85);
+            ctx.rect(400 , 930 , 100, 200);
+            ctx.rect(550 , 930 , 100, 200);
+            ctx.fillStyle = "#16272D"; 
+            ctx.fill();
+
+            //teni
+            ctx.beginPath();
+            ctx.rect(350 , 1100 , 150, 80);
+            ctx.rect(550 , 1100 , 150, 80);
+            ctx.fillStyle = "#000000";
+            ctx.fill();
+
+            //espacio
+            ctx.beginPath();
+            ctx.rect(350 , 1050 , 50, 80);
+            ctx.rect(650 , 1050 , 100, 80);
+            ctx.fillStyle = "rgb(135, 126, 145)";
+            ctx.fill();
+
+            
+        }
+
+        let avatarX = canvas.width / 2 - 30;
+        let avatarY = canvas.height / 2 + 50;
+
+        dibujarMe(avatarX, avatarY);
+
+      
+
+document.getElementById("strawChop").onload = function() {
+  var img = document.getElementById("strawChop");
+  ctx.drawImage(img, 0, 0, 780, 850, 406, 550, 240, 230);
+};
+    </script>
+</body>
+</html>
