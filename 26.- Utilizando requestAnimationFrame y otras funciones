@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina de Hiram</title>
+    <style>
+body{
+    background-color: black;
+
+}
+canvas{
+    background-color: aqua;
+}
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="1000" ></canvas>
+
+    <script>
+
+
+function random_rgba() {
+var o = Math.round, r = Math.random, s = 255;
+return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+
+
+
+var color= "rgba(13,242,23,0.5)";
+var blanco="rgb(255,255,255)"
+var figura =true;
+let dibujando = false;
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+var x=500; var y=500;
+var dir=0;
+
+/*canvas.addEventListener("click", (e)=> {
+
+    console.log("hola");
+    console.log(e); 
+
+    if(figura){ 
+
+        ctx.fillStyle = color;
+
+        ctx.beginPath();
+        ctx.arc(e.layerX,e.layerY, 50, 0, 2 *Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+    }else{
+        ctx.beginPath();
+        ctx.rect(e.layerX,e.layerY,150,100)
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+    }
+});
+
+canvas.addEventListener("mouseover", (e)=>{
+    console.log("mouseover");
+    color=random_rgba();
+    ctx.fillStyle = color
+
+})
+
+canvas.addEventListener("mouseout", (e)=>{
+    console.log("mouseout");
+figura=!figura;
+})
+
+canvas.addEventListener("mousemove",(e)=>{
+    ctx.beginPath();
+        ctx.arc(e.layerX,e.layerY, 2, 0, 2 *Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+})
+
+
+canvas.addEventListener("mousedown", (e) => {
+    dibujando = true;
+    ctx.arc(e.layerX,e.layerY, 2, 0, 2 *Math.PI);
+        ctx.fill();
+        ctx.stroke();
+});
+
+canvas.addEventListener("mousemove", (e) => {
+    if (dibujando) {
+        ctx.arc(e.layerX,e.layerY, 2, 0, 2 *Math.PI);
+
+        ctx.stroke();
+    }
+});
+
+canvas.addEventListener("mouseup", () => {
+    dibujando = false;
+    ctx.beginPath();
+});*/
+
+ctx.beginPath();
+
+        ctx.rect(x,y,50,50)
+        color=random_rgba();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+
+
+document.addEventListener("keydown",(e) =>{
+console.log(e);
+
+switch(e.keyCode){
+    case 87:
+
+    dir=e.keyCode;
+    
+   
+    
+break;
+
+
+case 83:
+dir=e.keyCode;
+
+   
+  
+break;
+case 65:
+    dir =e.keyCode;
+
+   
+  
+break;
+case 68:
+    dir=e.keyCode;
+
+   
+   
+break;
+}
+});
+
+
+
+        function update()
+        {
+        switch(dir){
+            case 87:
+
+            
+            ctx.beginPath();
+
+        ctx.rect(0, 0, 1000, 1000)
+        ctx.fillStyle = blanco;
+        ctx.fill();
+            ctx.beginPath();
+
+            ctx.rect(x, y, 1000, 1000)
+            ctx.fillStyle = blanco;
+            ctx.beginPath();
+
+            ctx.rect(x, y, 50, 50)
+            y -= 10; 
+            color = random_rgba();
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.stroke();
+
+                                  if (y < - 50) {y = 950}
+        break;
+
+
+        case 83:
+            
+        ctx.beginPath();
+
+        ctx.rect(0, 0, 1000, 1000)
+        ctx.fillStyle = blanco;
+        ctx.fill();
+        ctx.beginPath();
+
+        ctx.rect(x, y, 50, 50)
+        y += 10; 
+        color = random_rgba();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+                                if (y > 1000) {y = 0}
+        break;
+        case 65:
+            
+        ctx.beginPath();
+
+        ctx.rect(0, 0, 1000, 1000)
+        ctx.fillStyle = blanco;
+        ctx.fill();
+        ctx.beginPath();
+
+        ctx.rect(x, y, 1000, 1000)
+        ctx.fillStyle = blanco;
+        ctx.beginPath();
+
+        ctx.rect(x, y, 50, 50)
+        x -= 10; 
+        color = random_rgba();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+                                    if (x < - 50) {x = 950}
+
+        break;
+        case 68:
+            
+        ctx.beginPath();
+
+        ctx.rect(0, 0, 1000, 1000)
+        ctx.fillStyle = blanco;
+        ctx.fill();
+        ctx.beginPath();
+
+        ctx.rect(x, y, 1000, 1000)
+        ctx.fillStyle = blanco;
+        ctx.beginPath();
+
+        ctx.rect(x, y, 50, 50)
+        x += 10; 
+        color = random_rgba();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+
+                                if (x > 1000) {x = 0}
+        
+        break;
+        }
+        window.requestAnimationFrame(update);
+        }
+
+
+
+    
+
+            window.requestAnimationFrame = (function () {
+                return window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame ||
+                    function (callback) {
+                        window.setTimeout(callback, 17);
+                    };
+            }());       
+
+window.requestAnimationFrame(update);
+
+/*
+document.addEventListener("keydown",(e) =>{
+
+    ctx.beginPath();
+    x=getRandomInt(950);
+    y=getRandomInt(950);
+        ctx.rect(x,y,50,50)
+        color=random_rgba();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+
+
+});*/
+
+    </script>  
+</body>
+</html>
