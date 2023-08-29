@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar Designer</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            background-color: rgb(135, 126, 145);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="1300"></canvas>
+    <img id="strawChop" src="chopper.png" alt="One piece chopper" hidden >
+    
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+
+        function random_rgba() {
+            const o = Math.round, r = Math.random, s = 255;
+            return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+        }
+
+         // cieelo
+         ctx.fillStyle = "rgba(75, 193, 179, 0.8)";
+        ctx.fillRect(0, 0, 1000, 1300);
+
+        // Sol
+        ctx.beginPath();
+        ctx.arc(100, 100, 200, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(255, 223, 0, 1)";
+        ctx.fill();
+        
+         // Montaña
+         ctx.fillStyle = "rgba(84, 65, 14, 0.8)";
+        ctx.beginPath();
+        ctx.moveTo(0, 1300 / 2);
+        ctx.lineTo(500, 100);
+        ctx.lineTo(1000, 1300 / 2);
+        ctx.closePath();
+        ctx.fill();
+
+        // pasto
+        ctx.fillStyle = "rgba(25, 136, 48, 0.8)";
+        ctx.fillRect(0, 1300 / 2, 1000, 1300 / 2);
+
+        // nube
+        ctx.beginPath();
+        ctx.arc(320, 125, 70, 0, 2 * Math.PI);
+        ctx.arc(370, 120, 70, 0, 2 * Math.PI);
+        ctx.arc(460, 118, 70, 0, 2 * Math.PI);
+        ctx.arc(550, 125, 70, 0, 2 * Math.PI);
+        ctx.arc(580, 120, 70, 0, 2 * Math.PI);
+        ctx.arc(660, 120, 70, 0, 2 * Math.PI);
+        ctx.arc(750, 125, 70, 0, 2 * Math.PI);
+        ctx.arc(800, 120, 70, 0, 2 * Math.PI);
+        ctx.arc(880, 120, 70, 0, 2 * Math.PI);
+       
+
+        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+        ctx.fill();
+        
+
+        ctx.arc(880, 180, 70, 0, 2 * Math.PI);
+        ctx.arc(780, 180, 70, 0, 2 * Math.PI);
+        ctx.arc(680, 180, 70, 0, 2 * Math.PI);
+        ctx.arc(580, 180, 70, 0, 2 * Math.PI);
+        ctx.arc(480, 180, 70, 0, 2 * Math.PI);
+        ctx.arc(380, 180, 70, 0, 2 * Math.PI);
+        ctx.arc(280, 180, 70, 0, 2 * Math.PI);
+        
+        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+        ctx.fill();
+
+        // Arbustos
+        dibujarArbusto(250, 1300 / 2 + 50, 40);
+        dibujarArbusto(600, 1300 / 2 + 50, 40);
+        dibujarArbusto(100, 1500 / 2 + 50, 40);
+        dibujarArbusto(400, 1500 / 2 + 50, 40);
+        dibujarArbusto(800, 1500 / 2 + 50, 40);
+        
+        function dibujarArbusto(x, y, radio) {
+            ctx.beginPath();
+            ctx.arc(x, y, radio, 0, 2 * Math.PI);
+            ctx.arc(x+15, y+10, radio, 0, 2 * Math.PI);
+            ctx.arc(x+2, y+24, radio, 0, 2 * Math.PI);
+            ctx.arc(x-22, y+15, radio, 0, 2 * Math.PI);
+            ctx.fillStyle = "green";
+            ctx.strokeStyle = "black"; 
+            ctx.stroke(); 
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x+15, y+10, 10, 0, 2 * Math.PI);
+           
+            ctx.arc(x-22, y+15,10, 0, 2 * Math.PI);
+            ctx.fillStyle = "red";
+           
+            ctx.fill();
+        }
+
+        //Rectangulo Gradiante
+
+        const grd = ctx.createLinearGradient(0, 1000, 0, 1500);
+        grd.addColorStop(0, "blue");
+
+        grd.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 1000, 1000, 250);
+
+        // Reflejo 
+        ctx.fillStyle = "rgba(84, 65, 14, 0.5)"; 
+        ctx.beginPath();
+        ctx.moveTo(0, 1500 / 2 + 250); 
+        ctx.lineTo(500, 1200); 
+        ctx.lineTo(1000, 1500 / 2 + 250); 
+        ctx.closePath();
+        ctx.fill();
+
+/*document.getElementById("strawChop").onload = function() {
+  var img = document.getElementById("strawChop");
+  ctx.drawImage(img, 0, 0, 780, 850, 406, 550, 240, 230);
+}; */
+    </script>
+</body>
+</html>
