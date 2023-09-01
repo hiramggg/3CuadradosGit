@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina de Hiram</title>
+    <style>
+        body {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="1000"></canvas>
+
+    <script>
+        function random_rgba() {
+            const o = Math.round, r = Math.random, s = 255;
+            return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+        }
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+        let x = 500;
+        let y = 500;
+        let dir = 0;
+        let cuadradoX = 650;
+        let cuadradoY = 650;
+        const cuadradoAncho = 40;
+        const cuadradoAlto = 40;
+
+        const paredes = [
+            { x: 300, y: 100, ancho: 350, alto: 35 },
+            { x: 300, y: 800, ancho: 350, alto: 35 },
+        ];
+
+        function repaint() {
+            ctx.beginPath();
+            ctx.rect(0, 0, 1000, 1000);
+            ctx.fillStyle = "white";
+            ctx.fill();
+        }
+
+        function dibujarCuadrado(x, y, ancho, alto, color) {
+            ctx.beginPath();
+            ctx.rect(x, y, ancho, alto);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        function seTocan(x1, y1, w1, h1, x2, y2, w2, h2) {
+            return (
+                x1 < x2 + w2 &&
+                x1 + w1 > x2 &&
+                y1 < y2 + h2 &&
+                y1 + h1 > y2
+            );
+        }
+
+        function update() {
+            repaint();
+
+            switch (dir) {
+                case 87:
+                    if (!hayColisionParedes(x, y - 10, 50, 50)) {
+                        y -= 10;
+                        if (y < 0) { y = 1000 }
+                    }
+                    break;
+
+                case 83:
+                    if (!hayColisionParedes(x, y + 10, 50, 50)) {
+                        y += 10;
+                        if (y > 1000) { y = 0 }
+                    }
+                    break;
+
+                case 65:
+                    if (!hayColisionParedes(x - 10, y, 50, 50)) {
+                        x -= 10;
+                        if (x < 0) { x = 1000 }
+                    }
+                    break;
+
+                case 68:
+                    if (!hayColisionParedes(x + 10, y, 50, 50)) {
+                        x += 10;
+                        if (x > 1000) { x = 0 }
+                    }
+                    break;
+            }
+
+            if (seTocan(x, y, 50, 50, cuadradoX, cuadradoY, cuadradoAncho, cuadradoAlto)) {
+                cuadradoX = getRandomInt(960);
+                cuadradoY = getRandomInt(960);
+            }
+
+            dibujarCuadrado(x, y, 50, 50, random_rgba());
+            dibujarCuadrado(cuadradoX, cuadradoY, cuadradoAncho, cuadradoAlto, "black");
+
+            ctx.fillStyle = "gray";
+            for (const pared of paredes) {
+                dibujarCuadrado(pared.x, pared.y, pared.ancho, pared.alto, "gray");
+            }
+
+            window.requestAnimationFrame(update);
+        }
+
+        function hayColisionParedes(x, y, ancho, alto) {
+            for (const pared of paredes) {
+                if (seTocan(x, y, ancho, alto, pared.x, pared.y, pared.ancho, pared.alto)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        document.addEventListener("keydown", (e) => {
+            console.log(e);
+
+            switch (e.keyCode) {
+                case 87:
+                case 83:
+                case 65:
+                case 68:
+                    dir = e.keyCode;
+                    break;
+            }
+        });
+
+        window.requestAnimationFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 17);
+                };
+        }());
+
+        window.requestAnimationFrame(update);
+    </script>
+</body>
+</html>
