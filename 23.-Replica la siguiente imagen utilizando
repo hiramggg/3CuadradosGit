@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina de Hiram</title>
+    <style>
+        body {
+            background-color: rgba(0, 0, 0, 0.8);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            background-color: rgba(129, 247, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="700" height="450"></canvas>
+
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function bloque(x, y, ancho, alto, color) {
+            ctx.fillStyle = "black";
+
+            ctx.fillRect(x - 3, y - 3, ancho + 6, alto + 6);
+
+            ctx.fillStyle = color;
+
+            ctx.fillRect(x, y, ancho, alto);
+
+            ctx.fillStyle = "black";
+
+            ctx.fillRect(x+1, y+1, 5, 5);
+            ctx.fillRect(x + ancho - 6, y+1, 5, 5);
+            ctx.fillRect(x+1, y + alto - 6 , 5, 5);
+            ctx.fillRect(x + ancho - 6 , y + alto - 6, 5, 5);
+        }
+
+        bloque(150, 50, 50, 50, "rgba(255, 138, 0)");
+        bloque(205, 50, 50, 50, "rgba(255, 138, 0)");
+
+        bloque(50, 150, 50, 50, "rgba(255, 138, 0)");
+
+        bloque(550, 150, 50, 50, "rgba(255, 138, 0)");
+
+
+
+        function bloqueObstaculo(x, y, ancho, alto, color) {
+            ctx.fillStyle = "black";
+
+        ctx.fillRect(x + 10, y + 30, ancho + 6, alto + 3);
+        ctx.fillStyle = "black";
+
+        ctx.fillRect(x - 3, y - 3, ancho + 6, alto + 3);
+
+        ctx.fillStyle = color;
+
+        ctx.fillRect(x, y, ancho, alto);
+
+        ctx.fillStyle = "black";
+
+        ctx.fillRect(x + 1, y + 1, 10, 10);
+        ctx.fillRect(x + ancho - 11, y + 1, 10, 10);
+        ctx.fillRect(x + 1, y + alto - 11, 10, 10);
+        ctx.fillRect(x + ancho - 11, y + alto - 11, 10, 10);
+
+        ctx.fillStyle = "gray"; 
+        ctx.beginPath();
+        ctx.arc(x + 6, y + 6, 4, 0, Math.PI * 2); 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(x + ancho - 6, y + 6, 4, 0, Math.PI * 2); 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(x + 6, y + alto - 6, 4, 0, Math.PI * 2); 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(x + ancho - 6, y + alto - 6, 4, 0, Math.PI * 2); 
+        ctx.fill();
+        
+        
+}
+        bloqueObstaculo(220, 185, 100, 150, "rgba(27, 165, 255)");
+        bloqueObstaculo(150, 235, 100, 100, "rgba(238, 206, 255)");
+
+        bloqueObstaculo(615, 235, 100, 100, "rgba(75, 181, 53)");
+
+        function dibujarArbusto(x, y, radio) {
+            ctx.beginPath();
+            ctx.arc(x, y, radio, 0, 2 * Math.PI);
+            ctx.arc(x+15, y+10, radio, 0, 2 * Math.PI);
+            ctx.arc(x-22, y+15, radio, 0, 2 * Math.PI);
+            ctx.fillStyle = "green";
+            ctx.strokeStyle = "black"; 
+            ctx.lineWidth = 5;
+            ctx.stroke(); 
+            ctx.fill();
+            
+        }
+
+        dibujarArbusto(80, 500 / 2 + 50, 40);
+
+        function dibujarCuadradoConDegradado(x, y, ancho, alto, color1, color2, color3) {
+        
+        const gradiente = ctx.createLinearGradient(x, y, x + ancho, y);
+
+    
+        gradiente.addColorStop(0, color1); 
+        gradiente.addColorStop(0.5, color2); 
+        gradiente.addColorStop(1, color3); 
+
+        
+        ctx.fillStyle = gradiente;
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 3;
+        
+        ctx.fillRect(x, y, ancho, alto);
+        ctx.strokeRect(x, y, ancho, alto);
+    }
+
+     dibujarCuadradoConDegradado(400, 200, 100, 40, "rgba(29, 176, 0)","rgba(23, 141, 0)", "rgba(55, 115, 43)"); 
+     dibujarCuadradoConDegradado(410, 240, 80, 99, "rgba(29, 176, 0)","rgba(23, 141, 0)", "rgba(55, 115, 43)"); 
+
+
+        function suelo() {
+
+    
+            ctx.fillStyle = "rgba(255, 138, 0)";
+            ctx.fillRect(0, 435 - 100, 700, 130);
+            ctx.fillStyle = "rgba(84, 46, 18)";
+            ctx.fillRect(0, 445 - 100, 700, 130);
+
+        
+            ctx.fillStyle = "rgba(152, 90, 45)";
+
+            for (let x = 0; x < 700; x += 35 + 5) {
+                for (let y = 450 - 100; y < 450; y += 35 + 5) {
+                    ctx.fillRect(x, y, 35, 35);
+        }
+    }
+}
+        suelo();
+
+
+    
+
+    </script>
+</body>
+</html>
