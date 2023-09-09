@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Hiram</title>
+</head>
+<body>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">
+    <p>Hola: {{ message }} !!</p>
+    <input v-model="message" placeholder="Ingresa Tu Nombre" />
+    <br>
+    <button @click="count++">
+        Count is: {{ count }} 
+    </button>
+    <br>
+    <br>
+    <input v-model="suma1" placeholder="Ingresa el primer numero" />
+    <br>
+    <input v-model="suma2" placeholder="Ingresa el segundo numero" />
+    <br>
+    <button @click="sumarNumeros">
+        Sumar
+    </button>
+    <p>La suma es: {{ resultadoSuma }}</p>
+</div>
+
+<script>
+  const { createApp, ref } = Vue
+  const message = ref('')
+  const count = ref(0)
+  const suma1 = ref()
+  const suma2 = ref()
+  const resultadoSuma = ref()
+
+  const app = createApp({
+    setup() {
+      const sumarNumeros = () => {
+        resultadoSuma.value = +(suma1.value) + +(suma2.value)
+      }
+
+      return {
+        message,
+        count,
+        suma1,
+        suma2,
+        sumarNumeros,
+        resultadoSuma
+      }
+    }
+  })
+
+  app.mount('#app')
+</script>
+    
+</body>
+</html>
