@@ -19,13 +19,44 @@
     <br>
     <br>
     <input v-model="suma1" placeholder="Ingresa el primer numero" />
-    <br>
     <input v-model="suma2" placeholder="Ingresa el segundo numero" />
     <br>
     <button @click="sumarNumeros">
         Sumar
     </button>
     <p>La suma es: {{ resultadoSuma }}</p>
+
+    <hr>
+    <ol>
+        <li v-for="item in persons">
+            {{item.name}} - {{item.lastname}}
+        </li>
+    </ol>
+    <form>
+        <fieldset>
+            <legend>
+                Nombre(s):
+            </legend>
+            <input type="text" v-model="username" name="">
+        </fieldset>
+       
+    </form>
+
+    <hr>
+    <form>
+        <fieldset>
+            <legend>
+                Apellido(s):
+            </legend>
+            <input type="text" v-model="lastname" name="">
+        </fieldset>
+        
+        <button type="button" v-on:click="addPerson">
+            Save data person
+        </button>
+    </form>
+
+
 </div>
 
 <script>
@@ -35,6 +66,9 @@
   const suma1 = ref()
   const suma2 = ref()
   const resultadoSuma = ref()
+  const username= ref('');
+  const lastname= ref('');
+  const persons= ref([]);
 
   const app = createApp({
     setup() {
@@ -48,9 +82,26 @@
         suma1,
         suma2,
         sumarNumeros,
-        resultadoSuma
+        resultadoSuma,
+        username,
+        lastname,
+        persons
       }
+    },
+    methods:{
+        addPerson(){
+            const person = {name:this.username,
+            lastname:this.lastname}
+            this.persons.push(person)
+
+
+            console.log("hola")
+            console.log(this.username)
+            console.log(this.lastname)
+        }
+       
     }
+    
   })
 
   app.mount('#app')
