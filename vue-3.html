@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Hiram</title>
+</head>
+<body>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">
+
+    <form>
+        <fieldset>
+            <legend>
+                Email:
+            </legend>
+            <input v-model="email" type="email" placeholder="Ingrese email" name="">
+        </fieldset>
+        <fieldset>
+            <legend>
+                Contraseña:
+            </legend>
+            <input v-model="password" type="contrasena" placeholder="Ingrese contraseña" name="">
+        </fieldset>
+    </form>
+    <button @click="login" type="button">
+        Access
+    </button>
+
+
+
+
+</div>
+
+<script>
+  const { createApp, ref } = Vue
+  const users= ref()
+  const email=ref([])
+  const password= ref([])
+
+
+  const app = createApp({
+    setup() {
+      
+
+      return {
+        users,
+        email,
+        password
+      }
+    },
+    methods:{
+        async login(){
+
+           const response = await fetch("users.json");
+           const users= await response.json();
+            console.log(users);
+
+            let login= false;
+        
+           users.forEach((user) => {
+
+                if(this.email==user.email){
+                    if(this.password==user.password){
+                        alert("Bienvenido");
+                        login=true;
+                    }
+                }
+
+           }
+           
+
+           );
+           if(!login){
+            alert("Su información no es correcta!!!");
+           }
+        }
+       
+    }
+    
+  })
+
+  app.mount('#app')
+</script>
+    
+</body>
+</html>
