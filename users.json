@@ -1,19 +1,26 @@
 [
     {
-        "name":"Hiram",
-        "lastname":"Lopez",
-        "email":"j@gmail.com",
-        "password":"asdfg",
-        "role_id":1,
-        "avatar":""
+        "name": "Hiram",
+        "lastname": "Lopez",
+        "email": "j@gmail.com",
+        "password": "asdfg",
+        "role_id": 1,
+        "avatar": ""
     },
     {
-        "name":"mayer",
-        "lastname":"barajas",
-        "email":"fancaifan@gmal.com",
-        "password":"miauyer",
-        "role_id":1,
-        "avatar":""
+        "name": "mayer",
+        "lastname": "barajas",
+        "email": "fancaifan@gmal.com",
+        "password": "miauyer",
+        "role_id": 1,
+        "avatar": ""
+    },
+    {
+        "name": "hiramgg",
+        "lastname": "lc",
+        "email": "giram@gmail.com",
+        "password": "asdfg",
+        "role_id": 1,
+        "avatar": ""
     }
-
 ]

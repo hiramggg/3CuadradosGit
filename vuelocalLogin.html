@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Hiram</title>
+</head>
+<body>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">
+    <div v-if="autentificador">
+        <h1>Bienvenido</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(user, index) in users" :key="index">
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.lastname }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div v-else>
+        <form>
+            <fieldset>
+                <legend>Email:</legend>
+                <input v-model="email" type="email" placeholder="Ingrese email" name="">
+            </fieldset>
+            <fieldset>
+                <legend>Contraseña:</legend>
+                <input v-model="password" type="password" placeholder="Ingrese contraseña" name="">
+            </fieldset>
+        </form>
+        <button @click="login" type="button">Acceder</button>
+        
+        
+        <form>
+            <fieldset>
+                <legend>Registro</legend>
+                <input v-model="nuevoNom" type="text" placeholder="Nombre" name="">
+                <input v-model="nuevoApellido" type="text" placeholder="Apellido" name="">
+                <input v-model="nuevoEmail" type="email" placeholder="Email" name="">
+                <input v-model="nuevoPassw" type="password" placeholder="Contraseña" name="">
+            </fieldset>
+        </form>
+        <button @click="register" type="button">Registrar</button>
+    </div>
+</div>
+
+<script>
+  const { createApp, ref } = Vue
+  const users = ref([])
+  const email = ref('')
+  const password = ref('')
+  const autentificador = ref(false)
+  const nuevoNom = ref('')
+  const nuevoApellido = ref('')
+  const nuevoEmail = ref('')
+  const nuevoPassw = ref('')
+
+  const app = createApp({
+    setup() {
+      return {
+        users,
+        email,
+        password,
+        autentificador,
+        nuevoNom,
+        nuevoApellido,
+        nuevoEmail,
+        nuevoPassw
+      }
+    },
+    methods:{
+        async loadUsers(){
+           const response = await fetch("users.json");
+           const userList = await response.json();
+           users.value = userList;
+        },
+        async login(){
+           await this.loadUsers();
+
+           const foundUser = users.value.find(user => user.email === email.value && user.password === password.value);
+
+           if (foundUser) {
+               alert("Bienvenido");
+               autentificador.value = true;
+           } else {
+               alert("Su información no es correcta!!!");
+           }
+        },
+        async register(){
+           const newUser = {
+               name: nuevoNom.value,
+               lastname: nuevoApellido.value,
+               email: nuevoEmail.value,
+               password: nuevoPassw.value,
+               role_id: 1, 
+               avatar: "" 
+           };
+
+           // email existente
+           const existingUser = users.value.find(user => user.email === newUser.email);
+
+           if (existingUser) {
+               alert("El usuario ya existe con este correo electrónico.");
+               return;
+           }
+
+           //push usuario
+           users.value.push(newUser);
+
+           // act json
+           const response = await fetch("update-users.php", {
+               method: "POST",
+               headers: {
+                   "Content-Type": "application/json"
+               },
+               body: JSON.stringify(users.value)
+           });
+
+           if (response.ok) {
+               alert("Usuario registrado exitosamente");
+           } else {
+               alert("Hubo un problema en el registro");
+           }
+       }
+    },
+    mounted() {
+        this.loadUsers();
+    }
+  })
+
+  app.mount('#app')
+</script>
+
+</body>
+</html>
