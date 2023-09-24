@@ -4,6 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Hiram</title>
+    <style>
+    
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+
+thead {
+  background-color: #333; 
+  color: #fff; 
+}
+
+th {
+  padding: 10px;
+  text-align: left;
+}
+
+
+tbody tr:nth-child(odd) {
+  background-color: #eee; 
+}
+
+tbody td {
+  padding: 10px;
+}
+
+
+tbody td:nth-child(4) a {
+  color: #007bff; 
+  text-decoration: none;
+}
+
+tbody td:nth-child(4) a:hover {
+  text-decoration: underline; 
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button, .remove-button {
+    padding: 5px 10px;
+    background-color: #007bff; 
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.remove-button {
+    background-color: #dc3545; 
+}
+
+    </style>
 </head>
 <body>
 
@@ -15,17 +71,54 @@
         <table>
             <thead>
                 <tr>
-                    <th>Email</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
+                    <th>Personal data</th>
+                    <th>Contact data</th>
+                    <th>Company data</th>
+                    <th>Website</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(user, index) in users" :key="index">
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.lastname }}</td>
+                <tr v-for="user in users" :key="index">
+                    <td>{{ user.name }}, {{ user.lastname }}</td>
+            
+                    <td>{{ user.email }}, {{ user.phone }}</td>
+                
+                    <td>{{ user.ocupation }}, {{ user.work }} </td>
+                
+                    <td>{{ user.website }} </td>
+
+                    <td class="action-buttons">      
+                        <button class="edit-button" @click="startEdit(user)">Edit</button>
+                        <button class="remove-button" @click="removeUser(user)">Remove</button>         
+                    </td>
+
+            
+
                 </tr>
+
+                <tr v-if="isEditing">
+                    <td>
+                      <input v-model="editedUser.name" type="text" placeholder="Nombre">
+                    </td>
+                    <td>
+                      <input v-model="editedUser.email" type="email" placeholder="Email">
+                    </td>
+                    <td>
+                      <input v-model="editedUser.ocupation" type="text" placeholder="Ocupación">
+                    </td>
+                    <td>
+                      <input v-model="editedUser.work" type="text" placeholder="Trabajo">
+                    </td>
+                    <td>
+                      <input v-model="editedUser.website" type="text" placeholder="Sitio web">
+                    </td>
+                    <td class="action-buttons">
+                      <button @click="saveEdit">Guardar</button>
+                      <button @click="cancelEdit">Cancelar</button>
+                    </td>
+                  </tr>
+                  
             </tbody>
         </table>
     </div>
@@ -67,6 +160,8 @@
   const nuevoApellido = ref('')
   const nuevoEmail = ref('')
   const nuevoPassw = ref('')
+  const editedUser = ref(null);
+  const isEditing = ref(false);
 
   const app = createApp({
     setup() {
@@ -78,14 +173,55 @@
         nuevoNom,
         nuevoApellido,
         nuevoEmail,
-        nuevoPassw
+        nuevoPassw,
+        editedUser,
+        isEditing,
       }
     },
     methods:{
+
+        startEdit(user) {
+  this.editedUser = { ...user };
+  this.isEditing = true;
+ 
+  const editedUserFromStorage = JSON.parse(localStorage.getItem('editedUser'));
+  localStorage.setItem('editedUser', JSON.stringify(this.editedUser));
+  if (editedUserFromStorage && editedUserFromStorage.id === user.id) {
+    this.editedUser = editedUserFromStorage;
+  }
+},
+saveEdit() {
+  
+  const index = this.users.findIndex((user) => user.id === this.editedUser.id);
+  if (index !== -1) {
+    
+    this.users[index] = { ...this.editedUser };
+    
+    localStorage.setItem('users', JSON.stringify(this.users));
+    
+    localStorage.removeItem('editedUser');
+  }
+  
+  this.editedUser = null;
+  this.isEditing = false;
+},
+
+cancelEdit() {
+  
+  localStorage.removeItem('editedUser');
+  
+  this.editedUser = null;
+  this.isEditing = false;
+},
+
         async loadUsers(){
            const response = await fetch("users.json");
            const userList = await response.json();
            users.value = userList;
+       
+            const removedUsers = JSON.parse(localStorage.getItem('removedUsers')) || [];
+            const activeUsers = users.value.filter((user) => !removedUsers.some((removedUser) => removedUser.id === user.id));
+            users.value = activeUsers;
         },
         async login(){
            await this.loadUsers();
@@ -109,7 +245,9 @@
                avatar: "" 
            };
 
-           // email existente
+           
+
+           // email existe
            const existingUser = users.value.find(user => user.email === newUser.email);
 
            if (existingUser) {
@@ -117,6 +255,7 @@
                return;
            }
 
+           
            //push usuario
            users.value.push(newUser);
 
@@ -134,12 +273,25 @@
            } else {
                alert("Hubo un problema en el registro");
            }
-       }
+       },
+       removeUser(userToRemove) {
+        const index = users.value.indexOf(userToRemove);
+  if (index !== -1) {
+    
+    users.value.splice(index, 1);
+    
+    const removedUsers = JSON.parse(localStorage.getItem('removedUsers')) || [];
+
+    const updatedRemovedUsers = removedUsers.filter((user) => user.id !== userToRemove.id);
+
+    localStorage.setItem('removedUsers', JSON.stringify(updatedRemovedUsers));
+  }
+       },
     },
     mounted() {
         this.loadUsers();
-    }
-  })
+    },
+  });
 
   app.mount('#app')
 </script>
