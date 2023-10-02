@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Película</title>
+    <link rel="stylesheet" href="./movie.css">
+</head>
+<body>
+    <header>
+        <img src="" alt="Poster de la Película" id="moviePoster">
+        <h2 id="movieTitle">Título de la Película</h2>
+    </header>
+
+    <main>
+        <div class="movie-details">
+            <div class="poster">
+                <h2>Calificación</h2>
+
+                <p id="movieRating">Calificación de la película</p>
+                <h2>Calificación del Usuario</h2>
+                <input type="number" id="movieRatingInput" min="1" max="10" step="0.1" placeholder="Calificación del 1 al 10">
+                <button id="submitRating">Calificar</button>
+                <p id="userRating">Tu Calificación:</p>
+            </div>
+            <div class="description">
+                <h2>Descripción</h2>
+                <p id="movieDescription">Descripción de la película.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="moviesc.js"></script>
+</body>
+</html>
